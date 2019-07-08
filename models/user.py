@@ -5,30 +5,27 @@ import json
 
 
 class User(db.Model):
-    def __init__(self, email, first_name, last_name, oauth_token, oauth_token_secret):
-        self.email = email
-        self.first_name = first_name
-        self.last_name = last_name
+    def __init__(self, screen_name, oauth_token, oauth_token_secret):
+        self.screen_name = screen_name
         self.oauth_token = oauth_token
         self.oauth_token_secret = oauth_token_secret
 
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String)
-    first_name = db.Column(db.String)
-    last_name = db.Column(db.String)
+    screen_name = db.Column(db.String)
     oauth_token = db.Column(db.String)
     oauth_token_secret = db.Column(db.String)
 
     def __repr__(self):
-        return "<User {}>".format(self.email)
+        return "<User {}>".format(self.screen_name)
 
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
 
     @classmethod
-    def find_by_email(cls, email):
-        query = db.session.query.filter_by(email=email).first()
+    def find_by_screen_name(cls, screen_name):
+        query = cls.query.filter_by(screen_name=screen_name).first()
         return query
 
     def make_a_request(self, url, verb,):

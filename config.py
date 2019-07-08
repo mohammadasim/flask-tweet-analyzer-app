@@ -1,5 +1,6 @@
 import os
 
+
 class Config(object):
     DEBUG = False
     TESTING = False
@@ -7,6 +8,7 @@ class Config(object):
     format(username=os.environ.get('PSQL_USER'), password=os.environ.get('PSQL_USER_PASSWORD'),
            database=os.environ.get('PSQL_DB_NAME'))
     SQLALCHEMY_TRACK_MODIFICATIONS= False
+    SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 class DevelopmentConfig(Config):
