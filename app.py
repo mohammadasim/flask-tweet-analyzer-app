@@ -1,11 +1,13 @@
 from flask import Flask, render_template
 from twitter_utils import get_request_token
-import os
+import config
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://{username}:{password}@localhost/{database}'.\
-    format(username=os.environ.get('PSQL_USER'), password=os.environ.get('PSQL_USER_PASSWORD'),
-           database=os.environ.get('PSQL_DB_NAME'))
+app.config.from_object(config.DevelopmentConfig)
+
+
+def create_tables():
+    db.create_all()
 
 
 @app.route('/')
@@ -16,5 +18,11 @@ def homepage():
 @app.route('/login/twitter')
 def twitter_login():
     request_token = get_request_token()
+
+
+if __name__ == '__main__':
+    from database import db
+    db.init_app(app)
+    app.run()
     
 

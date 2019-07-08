@@ -1,4 +1,4 @@
-from user import User
+from models.user import User
 import constants
 import oauth2
 import urllib.parse as urlparse
