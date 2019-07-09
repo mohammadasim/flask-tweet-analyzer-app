@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2 style = "text-align: center;">Search</h2>
-    <form actions="" method="POST">
+    <form actions="{{ url_for('tweet_search_results') }}" method="POST">
         Search Twitter for <br>
         <input type="text" name="search" />
         <br>

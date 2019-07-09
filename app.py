@@ -62,13 +62,8 @@ def profile():
 @app.route('/tweet/search', methods = ['POST', 'GET'])
 def tweet_search():
     form = TweetSearchForm()
-    print('I am stuck here')
     if request.method == 'POST':
-        print('method is post')
-        print(request)
-        print(request.form['search'])
         session['searched_value'] = request.form['search']
-        print('going to run redirect')
         return redirect(url_for('tweet_search_results'))
     return render_template('search.html', form=form)
 
