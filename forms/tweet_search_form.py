@@ -3,5 +3,5 @@ from wtforms.validators import DataRequired
 
 
 class TweetSearchForm(Form):
-    search = StringField('search', [DataRequired()])
+    search = StringField('search Query', [DataRequired()])
     submit = SubmitField('submit')

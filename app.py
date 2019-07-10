@@ -40,7 +40,7 @@ def logout():
     return redirect(url_for('homepage'))
 
 
-@app.route('/auth/twitter')
+@app.route('/auth/twitter') # Twitter redirects to this url
 def twitter_auth():
     oauth_verifier = request.args.get('oauth_verifier')
     access_token = get_access_token(session['request_token'], oauth_verifier)
@@ -59,7 +59,7 @@ def profile():
     return render_template('profile.html', user=g.user) # We are passing a variable that will be accessed in the html page using jinja2 template
 
 
-@app.route('/tweet/search', methods = ['POST', 'GET'])
+@app.route('/search/twitter', methods = ['POST', 'GET'])
 def tweet_search():
     form = TweetSearchForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -70,8 +70,19 @@ def tweet_search():
 
 @app.route('/result', methods = ['POST','GET'])
 def tweet_search_results():
-    results = g.user.make_a_request('https://api.twitter.com/1.1/search/tweets.json?q={}'.format(session['searched_value']), 'GET')
+    results = g.user.make_a_request('https://api.twitter.com/1.1/search/tweets.json?q={}'.
+                                    format(session['searched_value']), 'GET')
     return render_template('result.html', results=results)
+
+
+@app.route('/search')# Method to seach using query string in the url /search?q=<search-item>
+def search():
+    query = request.args.get('q')
+    tweets = g.user.make_a_request('https://api.twitter.com/1.1/search/tweets.json?q={}'.
+                                    format(query), 'GET')
+    print(tweets)
+    tweet_texts = [tweet['text'] for tweet in tweets['statuses']]
+    return render_template('results.html', content=tweet_texts)
 
 
 if __name__ == '__main__':
