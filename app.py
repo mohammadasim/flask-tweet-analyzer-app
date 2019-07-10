@@ -61,8 +61,8 @@ def profile():
 
 @app.route('/tweet/search', methods = ['POST', 'GET'])
 def tweet_search():
-    form = TweetSearchForm()
-    if request.method == 'POST':
+    form = TweetSearchForm(request.form)
+    if request.method == 'POST' and form.validate():
         session['searched_value'] = request.form['search']
         return redirect(url_for('tweet_search_results'))
     return render_template('search.html', form=form)
@@ -70,8 +70,8 @@ def tweet_search():
 
 @app.route('/result', methods = ['POST','GET'])
 def tweet_search_results():
-    print(session['searched_value'])
-    return 'I have come to the search result section'
+    results = g.user.make_a_request('https://api.twitter.com/1.1/search/tweets.json?q={}'.format(session['searched_value']), 'GET')
+    return render_template('result.html', results=results)
 
 
 if __name__ == '__main__':

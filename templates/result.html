@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+</head>
+<body>
+    <ul id="result">
+    {% for row in results.statuses %}
+        <li>{{ row['text'] }} </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
