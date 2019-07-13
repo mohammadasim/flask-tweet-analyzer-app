@@ -81,7 +81,6 @@ def search():
     query = request.args.get('q')
     tweets = g.user.make_a_request('https://api.twitter.com/1.1/search/tweets.json?q={}'.
                                     format(query), 'GET')
-    print(tweets)
     tweet_texts = [{'tweet': tweet['text'], 'label': 'neutral'} for tweet in tweets['statuses']]
 
     for tweet in tweet_texts:

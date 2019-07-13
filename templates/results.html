@@ -20,7 +20,7 @@
             {% elif elements['label'] == 'pos' %}
                 {% set css_class = 'list-group-item-success'%}
             {% endif %}
-        <li class="list-group-item"> {{ elements['tweet'] }} </li>
+        <li class="list-group-item {{css_class}}"> {{ elements['tweet'] }} </li>
         {% endfor %}
     </ul>
 
